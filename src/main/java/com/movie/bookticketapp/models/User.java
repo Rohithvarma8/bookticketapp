@@ -1,9 +1,6 @@
 package com.movie.bookticketapp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,13 +9,17 @@ import org.springframework.stereotype.Component;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "role", nullable = false)
+    private Role role;
 
     public String getFirstName() {
         return firstName;
@@ -53,5 +54,11 @@ public class User {
     }
 
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

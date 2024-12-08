@@ -1,6 +1,8 @@
 package com.movie.bookticketapp.controllers;
 
+import com.movie.bookticketapp.dao.RoleDao;
 import com.movie.bookticketapp.dao.UserDao;
+import com.movie.bookticketapp.models.Role;
 import com.movie.bookticketapp.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,10 @@ public class LoginController {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    RoleDao roleDao;
+
 
     @GetMapping("/login")
     public String displayLogin(){
@@ -34,8 +40,17 @@ public class LoginController {
             return "login";
         }
 
-        map.addAttribute("message", "Login successful!");
-        return "homepage";
+        Role role = user.getRole();
+
+        if(role.getId() == 2){
+            map.addAttribute("message", "Login successful!");
+            return "adminPage";
+        } else if (role.getId() == 1) {
+            return "homepage";
+        }
+
+        map.addAttribute("error","Role not found");
+        return "login";
 
     }
 

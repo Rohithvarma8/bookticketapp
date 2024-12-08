@@ -1,6 +1,8 @@
 package com.movie.bookticketapp.controllers;
 
+import com.movie.bookticketapp.dao.RoleDao;
 import com.movie.bookticketapp.dao.UserDao;
+import com.movie.bookticketapp.models.Role;
 import com.movie.bookticketapp.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class UserController {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    RoleDao roleDao;
 
     //hello
     @GetMapping("/signup")
@@ -47,6 +52,9 @@ public class UserController {
             map.addAttribute("user", user); // Preserve user input
             return "signup";
         }
+        Role role = roleDao.findRole(1);
+
+        user.setRole(role);
 
         userDao.saveUser(user);
         map.addAttribute("signupMessage", "User signed up successfully!");
