@@ -1,5 +1,6 @@
 package com.movie.bookticketapp;
 
+import com.movie.bookticketapp.models.Movie;
 import com.movie.bookticketapp.models.Role;
 import com.movie.bookticketapp.models.User;
 import org.hibernate.SessionFactory;
@@ -43,6 +44,7 @@ public class BookTicketAppApplication {
         metaDataSources.addPackage("com.movie.bookticketapp.models");
         metaDataSources.addAnnotatedClass(User.class);
         metaDataSources.addAnnotatedClass(Role.class);
+        metaDataSources.addAnnotatedClass(Movie.class);
         Metadata metaData = metaDataSources.buildMetadata();
 
         return metaData.getSessionFactoryBuilder().build();

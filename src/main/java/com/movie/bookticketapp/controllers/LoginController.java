@@ -42,12 +42,14 @@ public class LoginController {
 
         Role role = user.getRole();
 
-        if(role.getId() == 2){
+        if (role.getId() == 2) {
             map.addAttribute("message", "Login successful!");
-            return "adminPage";
+            return "redirect:/adminPage"; // Redirects to the adminPage endpoint
         } else if (role.getId() == 1) {
-            return "homepage";
+            map.addAttribute("message", "Login successful!");
+            return "redirect:/homepage"; // Redirects to the homepage endpoint
         }
+
 
         map.addAttribute("error","Role not found");
         return "login";
