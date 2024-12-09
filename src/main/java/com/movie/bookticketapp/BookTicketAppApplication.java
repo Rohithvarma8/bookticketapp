@@ -1,8 +1,6 @@
 package com.movie.bookticketapp;
 
-import com.movie.bookticketapp.models.Movie;
-import com.movie.bookticketapp.models.Role;
-import com.movie.bookticketapp.models.User;
+import com.movie.bookticketapp.models.*;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,6 +43,9 @@ public class BookTicketAppApplication {
         metaDataSources.addAnnotatedClass(User.class);
         metaDataSources.addAnnotatedClass(Role.class);
         metaDataSources.addAnnotatedClass(Movie.class);
+        metaDataSources.addAnnotatedClass(Screen.class);
+        metaDataSources.addAnnotatedClass(Seat.class);
+        metaDataSources.addAnnotatedClass(Theatre.class);
         Metadata metaData = metaDataSources.buildMetadata();
 
         return metaData.getSessionFactoryBuilder().build();

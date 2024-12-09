@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "seats")
+public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String role_name;
+    private String seatNumber;
 
     public int getId() {
         return id;
@@ -23,11 +23,11 @@ public class Role {
 //        this.id = id;
 //    }
 
-    public String getRole_name() {
-        return role_name;
+    public String getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }

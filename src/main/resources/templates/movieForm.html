@@ -2,40 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Movie</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            color: #343a40; /* Dark text */
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #dc3545; /* Bootstrap Danger Red */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #dc3545;
+        }
+        .btn-submit {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border: none;
+        }
+        .btn-submit:hover {
+            background-color: #bd2130; /* Darker Red */
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-<h1>Add a New Movie</h1>
-<form th:action="@{/addMovie}" method="post" enctype="multipart/form-data" th:object="${movie}">
-    <!-- Title -->
-    <label for="title">Title:</label>
-    <input type="text" id="title" th:field="*{title}" required>
-    <br>
+<div class="container">
+    <div class="form-container">
+        <h1>Add a New Movie</h1>
+        <form th:action="@{/addMovie}" method="post" enctype="multipart/form-data" th:object="${movie}">
+            <!-- Title -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Enter movie title" required>
+            </div>
 
-    <!-- Actor -->
-    <label for="actor">Actor:</label>
-    <input type="text" id="actor" th:field="*{actor}" required>
-    <br>
+            <!-- Actor -->
+            <div class="mb-3">
+                <label for="actor" class="form-label">Actor:</label>
+                <input type="text" id="actor" th:field="*{actor}" class="form-control" placeholder="Enter lead actor" required>
+            </div>
 
-    <!-- Genre -->
-    <label for="genre">Genre:</label>
-    <input type="text" id="genre" th:field="*{genre}" required>
-    <br>
+            <!-- Genre -->
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre:</label>
+                <input type="text" id="genre" th:field="*{genre}" class="form-control" placeholder="Enter movie genre" required>
+            </div>
 
-    <!-- Director -->
-    <label for="director">Director:</label>
-    <input type="text" id="director" th:field="*{director}" required>
-    <br>
+            <!-- Director -->
+            <div class="mb-3">
+                <label for="director" class="form-label">Director:</label>
+                <input type="text" id="director" th:field="*{director}" class="form-control" placeholder="Enter director name" required>
+            </div>
 
-    <!-- Image -->
-    <label for="image">Upload Image:</label>
-    <input type="file" id="image" th:field="*{image}" required>
-    <br>
+            <!-- Image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image:</label>
+                <input type="file" id="image" th:field="*{image}" class="form-control" required>
+            </div>
 
-    <!-- Error Message -->
-    <p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+            <!-- Error Message -->
+            <div th:if="${error != null}" class="error-message mb-3" th:text="${error}"></div>
 
-    <!-- Submit -->
-    <button type="submit">Add Movie</button>
-</form>
+            <!-- Submit -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-submit">Add Movie</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

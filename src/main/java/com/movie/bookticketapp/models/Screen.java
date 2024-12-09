@@ -1,19 +1,19 @@
 package com.movie.bookticketapp.models;
 
-
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "screens")
+public class Screen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String role_name;
+    @Column(name = "screenNumber")
+    private String screenNumbers;
 
     public int getId() {
         return id;
@@ -23,11 +23,11 @@ public class Role {
 //        this.id = id;
 //    }
 
-    public String getRole_name() {
-        return role_name;
+    public String getScreenNumbers() {
+        return screenNumbers;
     }
 
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
+    public void setScreenNumbers(String screenNumbers) {
+        this.screenNumbers = screenNumbers;
     }
 }
