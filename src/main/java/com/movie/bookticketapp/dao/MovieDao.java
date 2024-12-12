@@ -33,4 +33,13 @@ public class MovieDao {
         }
     }
 
+    public Movie getMovieById(int movieId) {
+        try (Session session = sf.openSession()) {
+            Movie m = session.get(Movie.class, movieId);// Fetch movie by primary key
+            System.out.println(m.getId());
+            return m;
+        }
+    }
+
+
 }

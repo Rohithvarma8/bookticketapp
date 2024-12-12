@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List Theatres</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">List of Theatres</h1>
+
+    <div class="card mt-4">
+        <div class="card-header">Theatres</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Theatre Name</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="theatre, stat : ${theatres}">
+                    <td th:text="${stat.index + 1}"></td>
+                    <td th:text="${theatre.name}"></td>
+                    <td th:text="${theatre.location}"></td>
+                    <td>
+                        <a th:href="'/screens/list?theatreId=' + ${theatre.id}" class="btn btn-primary btn-sm">View Screens</a>
+                        <a th:href="'/screens/add?theatreId=' + ${theatre.id}" class="btn btn-success btn-sm">Add Screen</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/theatres/add" class="btn btn-primary mt-3">Add Theatre</a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

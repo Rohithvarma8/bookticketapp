@@ -57,6 +57,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             background-color: #fff;
+            cursor: pointer;
         }
 
         .movie-card:hover {
@@ -96,24 +97,16 @@
         <button type="submit" class="btn">Add Movie</button>
     </form>
 
-    <!-- Add Screens Button -->
-    <form action="/addScreens" method="get" style="display: inline; margin-left: 10px;">
-        <button type="submit" class="btn btn-secondary">Add Screens</button>
-    </form>
-
-    <!-- Add Seats Button -->
-    <form action="/addSeats" method="get" style="display: inline; margin-left: 10px;">
-        <button type="submit" class="btn btn-secondary">Add Seats</button>
-    </form>
-    <form action="/addTheatre" method="get" style="display: inline; margin-left: 10px;">
-        <button type="submit" class="btn btn-secondary">Add Theatre</button>
+    <!-- Add Theatre Button -->
+    <form action="/theatres/add" method="get" style="display: inline; margin-left: 10px;">
+        <button type="submit" class="btn">Add Theatre</button>
     </form>
 </div>
 
-
 <div class="movie-container">
     <!-- Loop through movies dynamically -->
-    <div th:each="movie : ${movies}" class="movie-card">
+    <div th:each="movie : ${movies}" class="movie-card"
+         th:onclick="|window.location.href='/movieDetails/list?movieId=' + ${movie.id}|">
         <img th:src="@{'/movieImages/' + ${movie.imagePath}}" alt="Movie Image" class="movie-image">
         <div class="movie-details">
             <div class="movie-title" th:text="${movie.title}"></div>

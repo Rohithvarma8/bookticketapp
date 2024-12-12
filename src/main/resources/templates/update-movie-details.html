@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Movie Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Update Movie Details</h1>
+
+    <form th:action="@{/movieDetails/update}" method="post">
+        <input type="hidden" name="movieId" th:value="${movieDetails.movie.id}"/>
+
+        <!-- Movie Information -->
+        <div class="mb-3">
+            <label><strong>Title:</strong></label>
+            <input type="text" class="form-control" th:value="${movieDetails.movie.title}" disabled>
+        </div>
+        <div class="mb-3">
+            <label><strong>Actor:</strong></label>
+            <input type="text" class="form-control" th:value="${movieDetails.movie.actor}" disabled>
+        </div>
+        <div class="mb-3">
+            <label><strong>Genre:</strong></label>
+            <input type="text" class="form-control" th:value="${movieDetails.movie.genre}" disabled>
+        </div>
+        <div class="mb-3">
+            <label><strong>Director:</strong></label>
+            <input type="text" class="form-control" th:value="${movieDetails.movie.director}" disabled>
+        </div>
+
+        <!-- Theatre Selection -->
+        <div class="mb-3">
+            <label><strong>Select Theatres:</strong></label>
+            <select name="theatreIds" multiple class="form-select">
+                <option th:each="theatre : ${allTheatres}"
+                        th:value="${theatre.id}"
+                        th:text="${theatre.name}"
+                        th:selected="${movieDetails.theatres.contains(theatre)}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a th:href="@{/movieDetails/list(movieId=${movieDetails.movie.id})}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

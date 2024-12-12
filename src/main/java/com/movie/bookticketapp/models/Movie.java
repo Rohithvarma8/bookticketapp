@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @Component
 @Entity
@@ -11,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class Movie {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id; // Use Integer instead of int
 
     private String title;
     private String actor;
@@ -23,6 +25,10 @@ public class Movie {
     private MultipartFile image;
 
     private String imagePath;
+
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MovieDetails> movieDetailsList;
 
     public String getImagePath() {
         return imagePath;
@@ -36,9 +42,9 @@ public class Movie {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -78,5 +84,13 @@ public class Movie {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public List<MovieDetails> getMovieDetailsList() {
+        return movieDetailsList;
+    }
+
+    public void setMovieDetailsList(List<MovieDetails> movieDetailsList) {
+        this.movieDetailsList = movieDetailsList;
     }
 }

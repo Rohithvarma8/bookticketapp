@@ -1,6 +1,6 @@
 package com.movie.bookticketapp.dao;
 
-import com.movie.bookticketapp.models.Seat;
+import com.movie.bookticketapp.models.Show;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,25 +10,31 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class SeatDao {
+public class ShowDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void saveSeat(Seat seat) {
+    public void saveShow(Show show) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(seat);
+            session.persist(show);
             session.getTransaction().commit();
         }
     }
 
-    public List<Seat> getSeatsByShowId(int showId) {
+    public List<Show> getShowsByScreenId(int screenId) {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM Seat WHERE show.id = :showId";
-            Query query = session.createQuery(hql, Seat.class);
-            query.setParameter("showId", showId);
+            String hql = "FROM Show WHERE screen.id = :screenId";
+            Query query = session.createQuery(hql, Show.class);
+            query.setParameter("screenId", screenId);
             return query.getResultList();
+        }
+    }
+
+    public Show getShowById(int showId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Show.class, showId); // Efficiently fetch by primary key
         }
     }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Seat</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Add Seat</h1>
+
+    <!-- Form Card -->
+    <div class="card mt-4">
+        <div class="card-header">Seat Information</div>
+        <div class="card-body">
+            <form action="/seats/add" method="post" th:object="${seat}">
+                <!-- Hidden input for Show ID -->
+                <input type="hidden" name="showId" th:value="${seat.show.id}">
+
+                <!-- Seat Number Input -->
+                <div class="mb-3">
+                    <label for="seatNumber" class="form-label">Seat Number</label>
+                    <input type="text" id="seatNumber" name="seatNumber" class="form-control" th:field="*{seatNumber}" placeholder="Enter Seat Number (e.g., A1, B2)" required>
+                </div>
+
+                <!-- Is Booked Checkbox -->
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="isBooked" name="isBooked" class="form-check-input" th:field="*{booked}">
+                    <label for="isBooked" class="form-check-label">Is Booked</label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Add Seat</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to Show List Button -->
+    <div class="text-center mt-3">
+        <a href="/theatres/list" class="btn btn-secondary">Back to Theatres</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

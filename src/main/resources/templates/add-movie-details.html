@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Movie Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Add Movie Details</h1>
+    <form action="/movieDetails/add" method="post">
+        <!-- Hidden field for Movie ID -->
+        <input type="hidden" name="movieId" th:value="${movieDetails.movie.id}">
+
+        <!-- Theatre selection -->
+        <div class="mb-3">
+            <label for="theatres" class="form-label">Select Theatres</label>
+            <select id="theatres" name="theatreIds" class="form-select" multiple required>
+                <option th:each="theatre : ${theatres}" th:value="${theatre.id}" th:text="${theatre.name}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Movie Details</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -46,6 +46,8 @@ public class BookTicketAppApplication {
         metaDataSources.addAnnotatedClass(Screen.class);
         metaDataSources.addAnnotatedClass(Seat.class);
         metaDataSources.addAnnotatedClass(Theatre.class);
+        metaDataSources.addAnnotatedClass(Show.class);
+        metaDataSources.addAnnotatedClass(MovieDetails.class);
         Metadata metaData = metaDataSources.buildMetadata();
 
         return metaData.getSessionFactoryBuilder().build();
