@@ -10,34 +10,28 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
         }
 
-        h1 {
-            color: #343a40;
-            text-align: center;
-            margin-top: 20px;
+        .navbar-custom {
+            background-color: #dc3545; /* Red background */
+        }
+
+        .navbar-custom .nav-link {
+            color: white;
             font-weight: bold;
         }
 
-        .form-container {
-            text-align: center;
-            margin: 20px 0;
+        .navbar-custom .nav-link:hover {
+            color: #ffcccc;
         }
 
-        .form-container button {
-            background-color: #007BFF;
+        .navbar-custom .navbar-brand-logo {
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
+            font-weight: bold;
         }
 
-        .form-container button:hover {
-            background-color: #0056b3;
+        .navbar-custom .navbar-brand-logo:hover {
+            color: #ffcccc;
         }
 
         .movie-container {
@@ -89,28 +83,42 @@
     </style>
 </head>
 <body>
-<h1>Admin Page</h1>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand-logo" href="/adminPage">BookTicket</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/addMovie">Add Movie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/theatres/add">Add Theatre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/theatres/list">List Theatres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" style="color: #fff; background-color: #6c757d; border-radius: 5px; padding: 5px 10px;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div class="form-container">
-    <!-- Add Movie Button -->
-    <form action="/addMovie" method="get" style="display: inline;">
-        <button type="submit" class="btn">Add Movie</button>
-    </form>
-
-    <!-- Add Theatre Button -->
-    <form action="/theatres/add" method="get" style="display: inline; margin-left: 10px;">
-        <button type="submit" class="btn">Add Theatre</button>
-    </form>
-</div>
-
-<div class="movie-container">
-    <!-- Loop through movies dynamically -->
-    <div th:each="movie : ${movies}" class="movie-card"
-         th:onclick="|window.location.href='/movieDetails/list?movieId=' + ${movie.id}|">
-        <img th:src="@{'/movieImages/' + ${movie.imagePath}}" alt="Movie Image" class="movie-image">
-        <div class="movie-details">
-            <div class="movie-title" th:text="${movie.title}"></div>
-            <div class="movie-genre" th:text="${movie.genre}"></div>
+<div class="container mt-4">
+    <div class="movie-container">
+        <!-- Loop through movies dynamically -->
+        <div th:each="movie : ${movies}" class="movie-card"
+             th:onclick="|window.location.href='/movieDetails/list?movieId=' + ${movie.id}|">
+            <img th:src="@{'/movieImages/' + ${movie.imagePath}}" alt="Movie Image" class="movie-image">
+            <div class="movie-details">
+                <div class="movie-title" th:text="${movie.title}"></div>
+                <div class="movie-genre" th:text="${movie.genre}"></div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Seat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Update Seat</h1>
+
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/theatres/list}">Theatres</a></li>
+            <li class="breadcrumb-item">
+                <a th:href="'/screens/list?theatreId=' + ${theatreId}">Screens</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a th:href="'/shows/list?screenId=' + ${screenId} + '&theatreId=' + ${theatreId}">Shows</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a th:href="'/seats/list?showId=' + ${showId} + '&screenId=' + ${screenId} + '&theatreId=' + ${theatreId}">Seats</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Update Seat</li>
+        </ol>
+    </nav>
+
+    <!-- Update Seat Form -->
+    <div class="card mt-4">
+        <div class="card-header">Update Seat Information</div>
+        <div class="card-body">
+            <form th:action="@{/seats/update}" method="post">
+                <input type="hidden" th:name="seatId" th:value="${seat.id}" />
+                <input type="hidden" th:name="showId" th:value="${showId}" />
+                <input type="hidden" th:name="screenId" th:value="${screenId}" />
+                <input type="hidden" th:name="theatreId" th:value="${theatreId}" />
+
+                <div class="mb-3">
+                    <label for="seatNumber" class="form-label">Seat Number</label>
+                    <input type="text" class="form-control" id="seatNumber" name="seatNumber" th:value="${seat.seatNumber}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="isBooked" class="form-label">Booking Status</label>
+                    <select class="form-select" id="isBooked" name="booked">
+                        <option th:value="true" th:selected="${seat.booked}">Booked</option>
+                        <option th:value="false" th:selected="${!seat.booked}">Available</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Seat</button>
+                <a th:href="'/seats/list?showId=' + ${showId} + '&screenId=' + ${screenId} + '&theatreId=' + ${theatreId}"
+                   class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

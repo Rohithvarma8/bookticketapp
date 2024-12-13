@@ -49,4 +49,23 @@ public class TheatreDao {
             return query.list();
         }
     }
+
+    public void deleteTheatreById(int theatreId) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+
+            // Remove join table entries
+            String hql = "DELETE FROM movie_details_theatres WHERE theatre_id = :theatreId";
+            session.createNativeQuery(hql).setParameter("theatreId", theatreId).executeUpdate();
+
+            // Remove the theatre
+            Theatre theatre = session.get(Theatre.class, theatreId);
+            if (theatre != null) {
+                session.remove(theatre);
+            }
+
+            tx.commit();
+        }
+    }
+
 }

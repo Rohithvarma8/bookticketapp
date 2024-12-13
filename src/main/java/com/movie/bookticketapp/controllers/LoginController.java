@@ -4,6 +4,7 @@ import com.movie.bookticketapp.dao.RoleDao;
 import com.movie.bookticketapp.dao.UserDao;
 import com.movie.bookticketapp.models.Role;
 import com.movie.bookticketapp.models.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +31,8 @@ public class LoginController {
     public String handleLogin(
             @RequestParam String userName,
             @RequestParam String password,
-            ModelMap map
+            ModelMap map,
+            HttpSession session
     ) {
 
         User user = userDao.findByUserName(userName);
@@ -42,12 +44,17 @@ public class LoginController {
 
         Role role = user.getRole();
 
+        session.setAttribute("username", user.getUserName());
+        session.setAttribute("role", role.getRole_name());
+
+
+
         if (role.getId() == 2) {
             map.addAttribute("message", "Login successful!");
             return "redirect:/adminPage"; // Redirects to the adminPage endpoint
         } else if (role.getId() == 1) {
             map.addAttribute("message", "Login successful!");
-            return "redirect:/homepage"; // Redirects to the homepage endpoint
+            return "redirect:/u/homepage"; // Redirects to the homepage endpoint
         }
 
 
@@ -55,5 +62,11 @@ public class LoginController {
         return "login";
 
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Invalidate the session
+        return "redirect:/login"; // Redirect to the login page
+    }
+
 
 }

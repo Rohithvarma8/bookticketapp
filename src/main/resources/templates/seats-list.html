@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seats</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #dc3545; /* Red background */
+        }
+
+        .navbar-custom .nav-link {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #ffcccc;
+        }
+
+        .navbar-custom .navbar-brand-logo {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-custom .navbar-brand-logo:hover {
+            color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand-logo" href="/u/homepage">BookTicket</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" style="color: #fff; background-color: #6c757d; border-radius: 5px; padding: 5px 10px;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="text-center">Seats</h1>
+
+    <div class="seat-list mt-4">
+        <ul>
+            <!-- Display seat information -->
+            <li th:each="seat : ${seats}"
+                th:text="'Seat: ' + ${seat.seatNumber}"
+                th:attr="onclick=|goToPayment(${movieId}, ${theatreId}, ${screenId}, ${seat.id})|">
+            </li>
+        </ul>
+    </div>
+
+    <a th:href="@{/u/shows(movieId=${movieId}, theatreId=${theatreId}, screenId=${screenId})}" class="btn btn-secondary mt-4">Back to Shows</a>
+
+    <script>
+        // JavaScript function to handle seat click
+        function goToPayment(movieId, theatreId, screenId, seatId) {
+            // Construct the URL with all parameters
+            const url = `/u/payment/details?movieId=${movieId}&theatreId=${theatreId}&screenId=${screenId}&seatId=${seatId}`;
+            // Redirect to the payment/details page
+            window.location.href = url;
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -3,8 +3,53 @@
 <head>
   <title>List Screens</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .navbar-custom {
+      background-color: #dc3545; /* Red background */
+    }
+
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: bold;
+    }
+
+    .navbar-custom .nav-link:hover {
+      color: #ffcccc;
+    }
+
+    .navbar-custom .navbar-brand-logo {
+      color: white;
+      font-weight: bold;
+    }
+
+    .navbar-custom .navbar-brand-logo:hover {
+      color: #ffcccc;
+    }
+  </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand-logo" href="/adminPage">BookTicket</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/addMovie">Add Movie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/theatres/add">Add Theatre</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/theatres/list">List Theatres</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <div class="container mt-5">
   <h1 class="text-center">List of Screens</h1>
 
@@ -28,7 +73,12 @@
             <a th:href="'/shows/add?screenId=' + ${screen.id}" class="btn btn-primary btn-sm">Add Shows</a>
 
             <!-- Button to List Shows -->
-            <a th:href="'/shows/list?screenId=' + ${screen.id}" class="btn btn-secondary btn-sm">View Shows</a>
+            <a th:href="'/shows/list?screenId=' + ${screen.id} + '&theatreId=' + ${theatreId}" class="btn btn-secondary btn-sm">View Shows</a>
+
+            <!-- Button to Delete Screen -->
+            <a th:href="'/screens/delete?screenId=' + ${screen.id} + '&theatreId=' + ${theatreId}"
+               th:onclick="|return confirm('Are you sure you want to delete this screen?')|"
+               class="btn btn-danger btn-sm">Delete</a>
           </td>
         </tr>
         </tbody>

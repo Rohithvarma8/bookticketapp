@@ -48,6 +48,7 @@ package com.movie.bookticketapp.controllers;
 import com.movie.bookticketapp.dao.TheatreDao;
 import com.movie.bookticketapp.enums.Location;
 import com.movie.bookticketapp.models.Theatre;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -64,25 +65,68 @@ public class TheatreController {
 
 
     @GetMapping("/add")
-    public String showAddTheatreForm(@ModelAttribute Theatre theatre, ModelMap map) {
+    public String showAddTheatreForm(@ModelAttribute Theatre theatre, ModelMap map, HttpSession session) {
+        String validationResult = validateAdminSession(session);
+        if (validationResult != null) {
+            return validationResult; // Redirect to appropriate error page if validation fails
+        }
         map.addAttribute("theatre", theatre);
         map.addAttribute("locations", Location.values());
         return "add-theatre";
     }
 
     @PostMapping("/add")
-    public String addTheatre(@ModelAttribute("theatre") Theatre theatre) {
+    public String addTheatre(@ModelAttribute("theatre") Theatre theatre, HttpSession session) {
+
+        String validationResult = validateAdminSession(session);
+        if (validationResult != null) {
+            return validationResult; // Redirect to appropriate error page if validation fails
+        }
+
         theatreDao.saveTheatre(theatre);
         return "redirect:/theatres/list";
     }
 
     @GetMapping("/list")
-    public String listTheatres(ModelMap map) {
+    public String listTheatres(ModelMap map, HttpSession session) {
+
+        String validationResult = validateAdminSession(session);
+        if (validationResult != null) {
+            return validationResult; // Redirect to appropriate error page if validation fails
+        }
+
         List<Theatre> theatres = theatreDao.getAllTheatres();
         map.addAttribute("theatres", theatres);
         return "list-theatres";
     }
 
+    @GetMapping("/delete")
+    public String deleteTheatre(@RequestParam("theatreId") int theatreId, HttpSession session) {
 
+        String validationResult = validateAdminSession(session);
+        if (validationResult != null) {
+            return validationResult; // Redirect to appropriate error page if validation fails
+        }
+
+        theatreDao.deleteTheatreById(theatreId);
+        return "redirect:/theatres/list";
+    }
+
+
+    private String validateAdminSession(HttpSession session) {
+        if (session == null) {
+            return "no-session"; // Redirect to no-session page
+        }
+
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equalsIgnoreCase("ADMIN")) {
+            session.invalidate(); // Invalidate session if invalid or unauthorized
+            return "unauthorised"; // Redirect to unauthorized page
+        }
+
+        return null; // Session is valid
+    }
 }
 

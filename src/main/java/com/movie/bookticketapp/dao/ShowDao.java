@@ -4,6 +4,7 @@ import com.movie.bookticketapp.models.Show;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,5 +37,16 @@ public class ShowDao {
         try (Session session = sessionFactory.openSession()) {
             return session.get(Show.class, showId); // Efficiently fetch by primary key
         }
+    }
+
+    public void deleteShowById(int showId) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Show show = session.get(Show.class, showId);
+        if (show != null) {
+            session.delete(show);
+        }
+        tx.commit();
+        session.close();
     }
 }

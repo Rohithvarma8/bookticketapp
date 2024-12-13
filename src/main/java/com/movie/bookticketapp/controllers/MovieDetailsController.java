@@ -6,6 +6,7 @@ import com.movie.bookticketapp.dao.TheatreDao;
 import com.movie.bookticketapp.models.Movie;
 import com.movie.bookticketapp.models.MovieDetails;
 import com.movie.bookticketapp.models.Theatre;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +32,24 @@ public class MovieDetailsController {
     public String showAddMovieDetailsForm(
             @RequestParam("movieId") int movieId,
             @ModelAttribute MovieDetails movieDetails,
-            ModelMap map) {
+            ModelMap map, HttpSession session) {
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
+        // Add session attributes to the view
+        map.addAttribute("username", username);
         // Fetch the movie using the movieId
         Movie movie = movieDao.getMovieById(movieId);
         if (movie == null) {
@@ -51,7 +69,22 @@ public class MovieDetailsController {
     @PostMapping("/add")
     public String addMovieDetails(
             @RequestParam("movieId") int movieId,
-            @RequestParam List<Integer> theatreIds) {
+            @RequestParam List<Integer> theatreIds, HttpSession session) {
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
         // Fetch the Movie by ID
         Movie movie = movieDao.getMovieById(movieId);
         if (movie == null) {
@@ -74,7 +107,25 @@ public class MovieDetailsController {
     }
 
     @GetMapping("/list")
-    public String listMovieDetails(@RequestParam("movieId") int movieId, ModelMap map) {
+    public String listMovieDetails(@RequestParam("movieId") int movieId, ModelMap map, HttpSession session) {
+
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
+        // Add session attributes to the view
+        map.addAttribute("username", username);
         MovieDetails movieDetails = movieDetailsDao.getMovieDetailsByMovieId(movieId);
         if (movieDetails == null) {
             return "redirect:/movieDetails/add?movieId=" + movieId;
@@ -84,7 +135,24 @@ public class MovieDetailsController {
     }
 
     @GetMapping("/update")
-    public String showUpdateMovieDetailsForm(@RequestParam("movieId") int movieId, ModelMap map) {
+    public String showUpdateMovieDetailsForm(@RequestParam("movieId") int movieId, ModelMap map, HttpSession session) {
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
+        // Add session attributes to the view
+        map.addAttribute("username", username);
         MovieDetails movieDetails = movieDetailsDao.getMovieDetailsByMovieId(movieId);
         if (movieDetails == null) {
             throw new IllegalArgumentException("No MovieDetails found for Movie ID: " + movieId);
@@ -98,7 +166,25 @@ public class MovieDetailsController {
     @PostMapping("/update")
     public String updateMovieDetails(
             @RequestParam("movieId") int movieId,
-            @RequestParam("theatreIds") List<Integer> theatreIds) {
+            @RequestParam("theatreIds") List<Integer> theatreIds, HttpSession session) {
+
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
+
+
 
         MovieDetails movieDetails = movieDetailsDao.getMovieDetailsByMovieId(movieId);
         if (movieDetails == null) {
@@ -116,7 +202,23 @@ public class MovieDetailsController {
     }
 
     @GetMapping("/delete")
-    public String deleteMovieDetails(@RequestParam("movieId") int movieId) {
+    public String deleteMovieDetails(@RequestParam("movieId") int movieId, HttpSession session) {
+        if (session == null) {
+            // No session exists, redirect to login
+            return "no-session";
+        }
+
+        // Fetch session attributes
+        String username = (String) session.getAttribute("username");
+        String role = (String) session.getAttribute("role");
+
+        if (username == null || role == null || !role.equals("admin")) {
+            // Invalidate session if it's invalid or unauthorized
+            session.invalidate();
+            return "unauthorised";
+        }
+
+
         movieDetailsDao.deleteMovieDetailsByMovieId(movieId);
         return "redirect:/adminPage";
     }

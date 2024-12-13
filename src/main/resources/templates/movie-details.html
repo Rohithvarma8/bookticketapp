@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .navbar-custom {
+      background-color: #dc3545; /* Red background */
+    }
+
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: bold;
+    }
+
+    .navbar-custom .nav-link:hover {
+      color: #ffcccc;
+    }
+
+    .navbar-custom .navbar-brand-logo {
+      color: white;
+      font-weight: bold;
+    }
+
+    .navbar-custom .navbar-brand-logo:hover {
+      color: #ffcccc;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand-logo" href="/u/homepage">BookTicket</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout" style="color: #fff; background-color: #6c757d; border-radius: 5px; padding: 5px 10px;">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="text-center" th:text="${movieDetails.movie.title}"></h1>
+
+  <!-- Movie Details Section -->
+  <div class="movie-details-container">
+    <!-- Movie Image -->
+    <div>
+      <img th:src="@{'/movieImages/' + ${movieDetails.movie.imagePath}}" alt="Movie Image" class="movie-image">
+    </div>
+
+    <!-- Movie Info -->
+    <div class="movie-info">
+      <p><strong>Genre:</strong> <span th:text="${movieDetails.movie.genre}"></span></p>
+      <p><strong>Actor:</strong> <span th:text="${movieDetails.movie.actor}"></span></p>
+      <p><strong>Director:</strong> <span th:text="${movieDetails.movie.director}"></span></p>
+    </div>
+  </div>
+
+  <!-- Theatres Section -->
+  <!-- Theatres Section -->
+  <div class="theatre-list mt-5">
+    <h3>Theatres Showing This Movie</h3>
+    <ul>
+      <li th:each="theatre : ${movieDetails.theatres}">
+        <a th:href="@{/u/screens(movieId=${movieDetails.movie.id}, theatreId=${theatre.id})}" th:text="${theatre.name}" class="btn btn-link"></a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

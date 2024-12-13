@@ -42,6 +42,7 @@
 //}
 package com.movie.bookticketapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.movie.bookticketapp.enums.Location;
 import org.hibernate.annotations.Cascade;
 import jakarta.persistence.*;
@@ -72,6 +73,7 @@ public class Theatre {
 
     @ManyToMany(mappedBy = "theatres", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<MovieDetails> movies;
+
 
 
     // Getters and Setters
