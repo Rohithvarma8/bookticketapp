@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,6 +80,32 @@
             font-size: 14px;
             color: #6c757d;
         }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .pagination a:hover {
+            background-color: #f8f9fa;
+        }
+
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+            cursor: default;
+        }
     </style>
 </head>
 <body>
@@ -105,11 +131,37 @@
         <!-- Loop through movies dynamically -->
         <div th:each="movie : ${movies}" class="movie-card"
              th:onclick="|window.location.href='/u/movieDetails?movieId=' + ${movie.id}|">
-        <img th:src="@{'/movieImages/' + ${movie.imagePath}}" alt="Movie Image" class="movie-image">
+            <img th:src="@{'/movieImages/' + ${movie.imagePath}}" alt="Movie Image" class="movie-image">
             <div class="movie-details">
                 <div class="movie-title" th:text="${movie.title}"></div>
                 <div class="movie-genre" th:text="${movie.genre}"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/u/homepage(page=${currentPage - 1}, limit=${limit})}">
+                Previous
+            </a>
+
+            <span th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:if="${page != currentPage}"
+                   th:href="@{/u/homepage(page=${page}, limit=${limit})}"
+                   th:text="${page + 1}">
+                </a>
+                <span th:if="${page == currentPage}"
+                      class="active"
+                      th:text="${page + 1}">
+                </span>
+            </span>
+
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/u/homepage(page=${currentPage + 1}, limit=${limit})}">
+                Next
+            </a>
         </div>
     </div>
 </div>

@@ -33,6 +33,26 @@ public class MovieDao {
         }
     }
 
+    public List<Movie> findMoviesWithPagination(int limit, int offset) {
+        try (Session session = sf.openSession()) {
+            String hql = "FROM Movie";
+            Query<Movie> query = session.createQuery(hql, Movie.class);
+            query.setFirstResult(offset); // OFFSET
+            query.setMaxResults(limit);  // LIMIT
+            return query.list();
+        }
+    }
+
+    // Count total movies
+    public long countMovies() {
+        try (Session session = sf.openSession()) {
+            String hql = "SELECT COUNT(m) FROM Movie m";
+            Query<Long> query = session.createQuery(hql, Long.class);
+            return query.uniqueResult();
+        }
+    }
+
+
     public Movie getMovieById(int movieId) {
         try (Session session = sf.openSession()) {
             Movie m = session.get(Movie.class, movieId);// Fetch movie by primary key

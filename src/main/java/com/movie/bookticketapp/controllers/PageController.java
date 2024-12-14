@@ -35,13 +35,21 @@ public class PageController {
     private SeatDao seatDao;
 
     @GetMapping("/homepage")
-    public String homepage(ModelMap map) {
+    public String homepage(
+            @RequestParam(defaultValue = "0") int page, // Current page (0-based index)
+            @RequestParam(defaultValue = "10") int limit, // Movies per page
+            ModelMap map) {
 
-        List<Movie> movies = movieDao.findAllMovies();
+        int offset = page * limit; // Calculate offset
+        List<Movie> movies = movieDao.findMoviesWithPagination(limit, offset); // Fetch movies with pagination
+        long totalMovies = movieDao.countMovies(); // Total number of movies
+        int totalPages = (int) Math.ceil((double) totalMovies / limit); // Calculate total pages
 
         map.addAttribute("movies", movies);
+        map.addAttribute("currentPage", page);
+        map.addAttribute("totalPages", totalPages);
 
-        return "homepage"; // This should match the name of the HTML template
+        return "homepage"; // Thymeleaf template
     }
 
     @GetMapping("/movieDetails")

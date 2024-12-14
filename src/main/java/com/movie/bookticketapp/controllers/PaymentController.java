@@ -64,12 +64,12 @@ public class PaymentController {
 
         seatDao.updateSeat(seat);
 
-        map.addAttribute("movieId", movieId);
-        map.addAttribute("theatreId", theatreId);
-        map.addAttribute("screenId", screenId);
-        map.addAttribute("seatId", seatId);
+//        map.addAttribute("movieId", movieId);
+//        map.addAttribute("theatreId", theatreId);
+//        map.addAttribute("screenId", screenId);
+//        map.addAttribute("seatId", seatId);
 
-        return "redirect:/u/homepage";
+        return "redirect:/booking/PDF?movieId=" + movieId + "&theatreId=" + theatreId + "&screenId=" + screenId + "&seatId=" + seatId;
     }
 
     private String validateAdminSession(HttpSession session) {
