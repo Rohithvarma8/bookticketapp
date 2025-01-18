@@ -110,8 +110,8 @@ The database is designed to efficiently manage users, roles, movies, theatres, s
    ```
 
 5. **Access the Application**:
-   - Admin Portal: `http://localhost:8080/admin`
-   - User Portal: `http://localhost:8080`
+   - Admin Portal: `http://localhost:8080/adminPage`
+   - User Portal: `http://localhost:8080/u/homepage`
 
 ---
 
